@@ -199,7 +199,7 @@ async function handleNoti(e) {
 
 async function makePWA(e) {
   // PWA 홈 화면에 저장
-  let deferredPrompt;
+  let deferredPrompt = e;
 
   // PWA 설치 여부 확인
   let isInstalled = false;
