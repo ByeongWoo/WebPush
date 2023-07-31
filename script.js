@@ -197,6 +197,16 @@ async function handleNoti(e) {
     console.log("알림 응답에 실패했습니다.", error);
   }
 }
+// IOS 체크
+function isIos() {
+  const userAgent = window.navigator.userAgent.toLowerCase();
+  return /iphone|ipad|ipod/.test(userAgent);
+}
+// Android 체크
+function isAndroid() {
+  const userAgent = window.navigator.userAgent.toLowerCase();
+  return /android/.test(userAgent);
+}
 
 async function makePWA(e) {
   // PWA 홈 화면에 추가
@@ -205,10 +215,10 @@ async function makePWA(e) {
     alert("이미 PWA로 설치되어 있습니다.");
     return;
   } else {
-    if (window.navigator && window.navigator.splashscreen) {
+    if (isAndroid) {
       // 안드로이드의 경우
       window.navigator.splashscreen.addHomeButton();
-    } else if (window.navigator && window.navigator.addToHomescreen) {
+    } else if (isIos) {
       // iOS의 경우
       window.navigator.addToHomescreen();
     } else {
