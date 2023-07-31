@@ -212,12 +212,12 @@ async function makePWA(e) {
   if (window.matchMedia("(display-mode: standalone)").matches) {
     console.log("display-mode is standalone");
   } else {
-    console.log(isAndroid);
-    console.log(isIos);
-    if (isAndroid) {
+    console.log(isAndroid());
+    console.log(isIos());
+    if (isAndroid()) {
       // 안드로이드의 경우
       window.navigator.splashscreen.addHomeButton();
-    } else if (isIos) {
+    } else if (isIos()) {
       // iOS의 경우
       window.navigator.addToHomescreen();
     } else {
