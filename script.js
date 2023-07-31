@@ -209,22 +209,16 @@ function isAndroid() {
 }
 
 async function makePWA(e) {
-  // PWA 홈 화면에 추가
-  const isPwa = window.matchMedia("(display-mode: standalone)").matches;
-  if (isPwa) {
-    alert("이미 PWA로 설치되어 있습니다.");
-    return;
-  } else {
-    if (isAndroid) {
-      // 안드로이드의 경우
-      window.navigator.splashscreen.addHomeButton();
-    } else if (isIos) {
-      // iOS의 경우
-      window.navigator.addToHomescreen();
+  window.addEventListener("beforeinstallprompt", function (event) {
+    event.preventDefault();
+    //@ts-ignore
+    window.promptEvent = event;
+    if (window.matchMedia("(display-mode: standalone)").matches) {
+      console.log("display-mode is standalone");
     } else {
-      alert("홈 바로가기를 지원하지 않는 기기 또는 브라우저입니다.");
+      setVisible(true);
     }
-  }
+  });
 }
 /**
  * 알림 요청
