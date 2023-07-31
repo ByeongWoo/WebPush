@@ -210,15 +210,17 @@ function isAndroid() {
 
 async function makePWA(e) {
   if (window.matchMedia("(display-mode: standalone)").matches) {
-    console.log("display-mode is standalone");
+    alert("이미 PWA가 설치되어 있습니다.");
   } else {
     console.log(isAndroid());
     console.log(isIos());
     if (isAndroid()) {
       // 안드로이드의 경우
+      alert("AOS 홈 바로가기를 추가합니다.");
       window.navigator.splashscreen.addHomeButton();
     } else if (isIos()) {
       // iOS의 경우
+      alert("IOS 홈 바로가기를 추가합니다.");
       window.navigator.addToHomescreen();
     } else {
       alert("홈 바로가기를 지원하지 않는 기기 또는 브라우저입니다.");
