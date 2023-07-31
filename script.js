@@ -209,26 +209,21 @@ function isAndroid() {
 }
 
 async function makePWA(e) {
-  window.addEventListener("beforeinstallprompt", function (event) {
-    event.preventDefault();
-    //@ts-ignore
-    window.promptEvent = event;
-    if (window.matchMedia("(display-mode: standalone)").matches) {
-      console.log("display-mode is standalone");
+  if (window.matchMedia("(display-mode: standalone)").matches) {
+    console.log("display-mode is standalone");
+  } else {
+    console.log(isAndroid);
+    console.log(isIos);
+    if (isAndroid) {
+      // 안드로이드의 경우
+      window.navigator.splashscreen.addHomeButton();
+    } else if (isIos) {
+      // iOS의 경우
+      window.navigator.addToHomescreen();
     } else {
-      console.log(isAndroid);
-      console.log(isIos);
-      if (isAndroid) {
-        // 안드로이드의 경우
-        window.navigator.splashscreen.addHomeButton();
-      } else if (isIos) {
-        // iOS의 경우
-        window.navigator.addToHomescreen();
-      } else {
-        alert("홈 바로가기를 지원하지 않는 기기 또는 브라우저입니다.");
-      }
+      alert("홈 바로가기를 지원하지 않는 기기 또는 브라우저입니다.");
     }
-  });
+  }
 }
 /**
  * 알림 요청
