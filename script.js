@@ -204,18 +204,16 @@ async function makePWA(e) {
   if (isPwa) {
     alert("이미 PWA로 설치되어 있습니다.");
     return;
-  }
-  const promptEvent = e;
-  if (promptEvent) {
-    promptEvent.prompt();
-    promptEvent.userChoice.then((choiceResult) => {
-      if (choiceResult.outcome === "accepted") {
-        console.log("사용자가 설치를 수락함");
-      } else {
-        console.log("사용자가 설치를 거부함");
-      }
-      promptEvent = null;
-    });
+  } else {
+    if (window.navigator && window.navigator.splashscreen) {
+      // 안드로이드의 경우
+      window.navigator.splashscreen.addHomeButton();
+    } else if (window.navigator && window.navigator.addToHomescreen) {
+      // iOS의 경우
+      window.navigator.addToHomescreen();
+    } else {
+      alert("홈 바로가기를 지원하지 않는 기기 또는 브라우저입니다.");
+    }
   }
 }
 /**
