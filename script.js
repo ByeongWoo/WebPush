@@ -201,6 +201,13 @@ async function makePWA(e) {
   // PWA 홈 화면에 저장
   let deferredPrompt;
 
+  // PWA 설치 여부 확인
+  let isInstalled = false;
+  window.addEventListener("appinstalled", (e) => {
+    alert("appinstalled 이벤트 발생");
+    isInstalled = true;
+  });
+
   // PWA 설치 여부에 따른 처리
   if (isInstalled) {
     // 설치된 경우
