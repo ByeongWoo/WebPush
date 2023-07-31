@@ -1,97 +1,122 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app"
+    />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <!-- 상태 바의 스타일을 지정 -->
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <!-- 홈 화면에서 표시되는 앱 이름을 지정 -->
+    <meta name="apple-mobile-web-app-title" content="Web Push" />
+    <link rel="apple-touch-icon" href="logo192.png" />
+    <link rel="manifest" href="manifest.json" />
+    <title>Web Push</title>
+    <link rel="stylesheet" href="push.css" type="text/css" />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker
+          .register("sw.js")
+          .then((reg) => {
+            console.log("Service worker registered.", reg);
 
-<head>
-	<meta charset="utf-8" />
-	<link rel="icon" href="favicon.ico" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<meta name="theme-color" content="#000000" />
-	<meta name="description" content="Web site created using create-react-app" />
-	<meta name="apple-mobile-web-app-capable" content="yes">
-	<!-- 상태 바의 스타일을 지정 -->
-	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-	<!-- 홈 화면에서 표시되는 앱 이름을 지정 -->
-	<meta name="apple-mobile-web-app-title" content="Web Push">
-	<link rel="apple-touch-icon" href="logo192.png" />
-	<link rel="manifest" href="manifest.json" />
-	<title>Web Push</title>
-	<link rel="stylesheet" href="push.css" type="text/css" />
-	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-	<script>
-		if ('serviceWorker' in navigator) {
-			navigator.serviceWorker.register('sw.js')
-				.then((reg) => {
-					console.log('Service worker registered.', reg);
+            reg.pushManager
+              .getSubscription()
+              .then((subscription) => {
+                if (subscription) {
+                  console.log("구독 정보:", subscription);
+                } else {
+                  console.log("현재 구독 없음.");
+                }
+              })
+              .catch((error) => {
+                console.log("구독 정보를 가져오는 데 실패했습니다.", error);
+              });
+          })
+          .catch((error) => {
+            console.log("Service worker registration failed.", error);
+          });
+      }
+    </script>
+    <script src="script.js" defer></script>
+  </head>
 
-					reg.pushManager.getSubscription()
-						.then((subscription) => {
-							if (subscription) {
-								console.log('구독 정보:', subscription);
-							} else {
-								console.log('현재 구독 없음.');
-							}
-						})
-						.catch((error) => {
-							console.log('구독 정보를 가져오는 데 실패했습니다.', error);
-						});
-				})
-				.catch((error) => {
-					console.log('Service worker registration failed.', error);
-				});
-		}
-	</script>
-	<script src="script.js" defer></script>
-</head>
-
-<body>
-	<div style="padding: 20px;">
-		<h1>웹 푸시 테스트 </h1>
-		<p>아이폰은 IOS16.4이상, PWA 생성후 테스트 </p>
-		<p>번호 순서대로 진행하시면 됩니다.</p>
-		<p>1. '알림 허용' 클릭</p>
-		<p>2. '구독' 클릭 : 토큰 값 출력 확인 </p>
-		<p>3. '토근 서버 저장 하기' 클릭</p>
-		<p>4. '알림 받기' 클릭</p>
-		<br />
-		<button id="requestButton" onclick="requestNotificationPermission()"
-			style="padding: 10px; width: 120px; height: 40px;">알림
-			허용</button>
-		<!-- <p>
+  <body>
+    <div style="padding: 20px">
+      <h1>웹 푸시 테스트</h1>
+      <p>아이폰은 IOS16.4이상, PWA 생성후 테스트</p>
+      <p>번호 순서대로 진행하시면 됩니다.</p>
+      <p>1. '알림 허용' 클릭</p>
+      <p>2. '구독' 클릭 : 토큰 값 출력 확인</p>
+      <p>3. '토근 서버 저장 하기' 클릭</p>
+      <p>4. '알림 받기' 클릭</p>
+      <br />
+      <button
+        id="requestButton"
+        onclick="requestNotificationPermission()"
+        style="padding: 10px; width: 120px; height: 40px"
+      >
+        알림 허용
+      </button>
+      <!-- <p>
 			토큰 :<br />
 			<span id="permissionMsg"></span>
 		</p> -->
-		<p></p>
-		<button id="getTokenBtn" style="padding: 10px; width: 120px; height: 40px;">
-			구독
-		</button>
-		<button id="getUnsubscribeBtn" style="padding: 10px; width: 120px; height: 40px;">
-			구독 해지
-		</button>
-		<p>
-			토큰 :<br />
-			<span id="pushToken"></span>
-		</p>
-		<button id="handleSubmitBtn" style="padding: 10px; width: 150px; height: 40px;">
-			토큰 서버 저장 하기
-		</button>
-		<p>토큰 저장 응답 : <span id="resData"></span></p>
-		<button id="handleNotiBtn" style="padding: 10px; width: 120px; height: 40px;">
-			알림 받기
-		</button>
-		<p>.</p>
-		<div id="notificationPopup" class="Popup" style="display: none;">
-			<img id="popupImage" class="Popup_img" src="" alt="본문이미지" />
-			<div class="Popup_content">
-				<!-- <img id="popupIcon" class="Popup_icon" src="" alt="아이콘" /> -->
-				<div class="Popup_text">
-					<h4 id="popupTitle"></h4>
-					<label id="popupBody"></label>
-				</div>
-			</div>
-			<button id="closePopupBtn">Close</button>
-		</div>
-		<!-- <p>이벤트값 : <span id="eventMsg"></span></p> -->
-	</div>
-</body>
-
+      <p></p>
+      <button
+        id="getTokenBtn"
+        style="padding: 10px; width: 120px; height: 40px"
+      >
+        구독
+      </button>
+      <button
+        id="getUnsubscribeBtn"
+        style="padding: 10px; width: 120px; height: 40px"
+      >
+        구독 해지
+      </button>
+      <p>
+        토큰 :<br />
+        <span id="pushToken"></span>
+      </p>
+      <button
+        id="handleSubmitBtn"
+        style="padding: 10px; width: 150px; height: 40px"
+      >
+        토큰 서버 저장 하기
+      </button>
+      <p>토큰 저장 응답 : <span id="resData"></span></p>
+      <button
+        id="handleNotiBtn"
+        style="padding: 10px; width: 120px; height: 40px"
+      >
+        알림 받기
+      </button>
+      <button id="makePWA" style="padding: 10px; width: 150px; height: 40px">
+        바로가기 만들기
+      </button>
+      <p>.</p>
+      <div id="notificationPopup" class="Popup" style="display: none">
+        <img id="popupImage" class="Popup_img" src="" alt="본문이미지" />
+        <div class="Popup_content">
+          <!-- <img id="popupIcon" class="Popup_icon" src="" alt="아이콘" /> -->
+          <div class="Popup_text">
+            <h4 id="popupTitle"></h4>
+            <label id="popupBody"></label>
+          </div>
+        </div>
+        <button id="closePopupBtn">Close</button>
+      </div>
+      <!-- <p>이벤트값 : <span id="eventMsg"></span></p> -->
+    </div>
+  </body>
 </html>

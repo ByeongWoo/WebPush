@@ -43,6 +43,7 @@ document.addEventListener("DOMContentLoaded", function () {
   closePopupBtn = document.getElementById("closePopupBtn");
   //eventMsgElem = document.getElementById("eventMsg");
   permissionMsgElem = document.getElementById("permissionMsg");
+  makePWAbtn = document.getElementById("makePWA");
 
   // Event listeners
   getTokenBtn.addEventListener("click", getToken);
@@ -51,6 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
   //handleNotiAllBtn.addEventListener("click", handleNotiAll);
   handleSubmitBtn.addEventListener("click", handleSubmit);
   closePopupBtn.addEventListener("click", closePopup);
+  makePWAbtn.addEventListener("click", makePWA);
 });
 
 // Functions
@@ -193,6 +195,10 @@ async function handleNoti(e) {
   } catch (error) {
     console.log("알림 응답에 실패했습니다.", error);
   }
+}
+
+async function makePWA(e) {
+  alert("HELLO");
 }
 /**
  * 알림 요청
