@@ -24,6 +24,7 @@ let popupBody = "";
 let closePopupBtn = "";
 let eventMsgElem = "";
 let permissionMsgElem = "";
+let makePWAbtn = "";
 
 document.addEventListener("DOMContentLoaded", function () {
   // DOM elements
@@ -198,30 +199,22 @@ async function handleNoti(e) {
 }
 
 async function makePWA(e) {
-  // PWA 홈 화면에 저장
-  let deferredPrompt = e;
-
-  // PWA 설치 여부 확인
-  let isInstalled = false;
-  window.addEventListener("appinstalled", (e) => {
-    alert("appinstalled 이벤트 발생");
-    isInstalled = true;
-  });
-
-  // PWA 설치 여부에 따른 처리
-  if (isInstalled) {
-    // 설치된 경우
-    alert("설치된 경우");
-  } else {
-    // 설치되지 않은 경우
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then((choiceResult) => {
+  // PWA 홈 화면에 추가
+  const isPwa = window.matchMedia("(display-mode: standalone)").matches;
+  if (isPwa) {
+    alert("이미 PWA로 설치되어 있습니다.");
+    return;
+  }
+  const promptEvent = e;
+  if (promptEvent) {
+    promptEvent.prompt();
+    promptEvent.userChoice.then((choiceResult) => {
       if (choiceResult.outcome === "accepted") {
-        alert("사용자가 설치를 수락함");
+        console.log("사용자가 설치를 수락함");
       } else {
-        alert("사용자가 설치를 거부함");
+        console.log("사용자가 설치를 거부함");
       }
-      deferredPrompt = null;
+      promptEvent = null;
     });
   }
 }
