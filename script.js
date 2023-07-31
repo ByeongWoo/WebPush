@@ -198,7 +198,25 @@ async function handleNoti(e) {
 }
 
 async function makePWA(e) {
-  alert("HELLO");
+  // PWA 홈 화면에 저장
+  let deferredPrompt;
+
+  // PWA 설치 여부에 따른 처리
+  if (isInstalled) {
+    // 설치된 경우
+    alert("설치된 경우");
+  } else {
+    // 설치되지 않은 경우
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === "accepted") {
+        alert("사용자가 설치를 수락함");
+      } else {
+        alert("사용자가 설치를 거부함");
+      }
+      deferredPrompt = null;
+    });
+  }
 }
 /**
  * 알림 요청
