@@ -197,34 +197,20 @@ async function handleNoti(e) {
     console.log("알림 응답에 실패했습니다.", error);
   }
 }
-// IOS 체크
-function isIos() {
-  const userAgent = window.navigator.userAgent.toLowerCase();
-  return /iphone|ipad|ipod/.test(userAgent);
-}
-// Android 체크
-function isAndroid() {
-  const userAgent = window.navigator.userAgent.toLowerCase();
-  return /android/.test(userAgent);
-}
 
 async function makePWA(e) {
-  if (window.matchMedia("(display-mode: standalone)").matches) {
-    alert("이미 PWA가 설치되어 있습니다.");
+  var userAgent = navigator.userAgent.toLowerCase();
+  // 모바일 홈페이지 바로가기 링크 생성
+  if (userAgent.match("iphone")) {
+    document.write("");
+  } else if (userAgent.match("ipad")) {
+    document.write("");
+  } else if (userAgent.match("ipod")) {
+    document.write("");
+  } else if (userAgent.match("android")) {
+    document.write("");
   } else {
-    console.log(isAndroid());
-    console.log(isIos());
-    if (isAndroid()) {
-      // 안드로이드의 경우
-      alert("AOS 홈 바로가기를 추가합니다.");
-      window.navigator.splashscreen.addHomeButton();
-    } else if (isIos()) {
-      // iOS의 경우
-      alert("IOS 홈 바로가기를 추가합니다.");
-      window.navigator.addToHomescreen();
-    } else {
-      alert("홈 바로가기를 지원하지 않는 기기 또는 브라우저입니다.");
-    }
+    document.write("");
   }
 }
 /**
