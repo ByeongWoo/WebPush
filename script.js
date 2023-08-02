@@ -197,27 +197,27 @@ async function handleNoti(e) {
   }
 }
 
+document.getElementById("makePWA").addEventListener("click", async () => {
+  const promptEvent = window.deferredPrompt;
+  if (!promptEvent) {
+    // The deferred prompt isn't available.
+    return;
+  }
+  // Show the install prompt.
+  promptEvent.prompt();
+  // Log the result
+  const result = await promptEvent.userChoice;
+  console.log("👍", "userChoice", result);
+  // Reset the deferred prompt variable, since
+  // prompt() can only be called once.
+  window.deferredPrompt = null;
+  // Hide the install button.
+});
+
 window.addEventListener("beforeinstallprompt", (event) => {
   makePWA.style.display = "block";
   event.preventDefault();
   deferredPrompt = event;
-
-  document.getElementById("makePWA").addEventListener("click", async () => {
-    const promptEvent = window.deferredPrompt;
-    if (!promptEvent) {
-      // The deferred prompt isn't available.
-      return;
-    }
-    // Show the install prompt.
-    promptEvent.prompt();
-    // Log the result
-    const result = await promptEvent.userChoice;
-    console.log("👍", "userChoice", result);
-    // Reset the deferred prompt variable, since
-    // prompt() can only be called once.
-    window.deferredPrompt = null;
-    // Hide the install button.
-  });
 });
 
 window.addEventListener("appinstalled", (event) => {
