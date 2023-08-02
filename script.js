@@ -199,7 +199,7 @@ async function handleNoti(e) {
 }
 
 // PWA 설치
-makePWAbtn.addEventListener("click", async () => {
+async function makePWA(e) {
   // 버튼을 숨김
   installButton.style.display = "none";
   // 설치 이벤트를 기다림
@@ -210,7 +210,7 @@ makePWAbtn.addEventListener("click", async () => {
   console.log(`설치 결과: ${outcome}`);
   // 이벤트 초기화
   deferredPrompt = null;
-});
+};
 
 /**
  * 알림 요청
