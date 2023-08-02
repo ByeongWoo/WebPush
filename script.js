@@ -26,7 +26,6 @@ let eventMsgElem = "";
 let permissionMsgElem = "";
 let makePWAbtn = "";
 let installPrompt = "";
-let installPwaBtn = "";
 
 document.addEventListener("DOMContentLoaded", function () {
   // DOM elements
@@ -48,7 +47,6 @@ document.addEventListener("DOMContentLoaded", function () {
   permissionMsgElem = document.getElementById("permissionMsg");
   makePWAbtn = document.getElementById("makePWA");
   installPrompt = document.getElementById("installPrompt");
-  installPwaBtn = document.getElementById("installPwaBtn");
 
   // Event listeners
   getTokenBtn.addEventListener("click", getToken);
@@ -223,7 +221,7 @@ async function makePWA(e) {
   installPrompt.style.display = "block";
 }
 
-installPwaBtn.addEventListener("click", async () => {
+document.getElementById("installPwaBtn").addEventListener("click", async () => {
   console.log("👍", "butInstall-clicked");
   const promptEvent = window.deferredPrompt;
   if (!promptEvent) {
