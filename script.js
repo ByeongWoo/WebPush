@@ -24,8 +24,6 @@ let popupBody = "";
 let closePopupBtn = "";
 let eventMsgElem = "";
 let permissionMsgElem = "";
-let makePWAbtn = "";
-let installPrompt = "";
 
 document.addEventListener("DOMContentLoaded", function () {
   // DOM elements
@@ -45,8 +43,6 @@ document.addEventListener("DOMContentLoaded", function () {
   closePopupBtn = document.getElementById("closePopupBtn");
   //eventMsgElem = document.getElementById("eventMsg");
   permissionMsgElem = document.getElementById("permissionMsg");
-  makePWAbtn = document.getElementById("makePWA");
-  installPrompt = document.getElementById("installPrompt");
 
   // Event listeners
   getTokenBtn.addEventListener("click", getToken);
@@ -55,7 +51,6 @@ document.addEventListener("DOMContentLoaded", function () {
   //handleNotiAllBtn.addEventListener("click", handleNotiAll);
   handleSubmitBtn.addEventListener("click", handleSubmit);
   closePopupBtn.addEventListener("click", closePopup);
-  makePWAbtn.addEventListener("click", makePWA);
 });
 
 window.addEventListener("beforeinstallprompt", (event) => {
@@ -211,12 +206,7 @@ async function handleNoti(e) {
   }
 }
 
-async function makePWA(e) {
-  // PWA 설치
-  installPrompt.style.display = "block";
-}
-
-document.getElementById("installPwaBtn").addEventListener("click", async () => {
+document.getElementById("makePWA").addEventListener("click", async () => {
   console.log("👍", "butInstall-clicked");
   const promptEvent = window.deferredPrompt;
   if (!promptEvent) {
