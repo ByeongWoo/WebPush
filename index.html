@@ -22,7 +22,7 @@
     <title>Web Push</title>
     <link rel="stylesheet" href="push.css" type="text/css" />
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://button.glitch.me/button.js"></script>
     <script>
       if ("serviceWorker" in navigator) {
         navigator.serviceWorker
@@ -105,6 +105,17 @@
       <button id="makePWA" style="padding: 10px; width: 150px; height: 40px">
         바로가기 만들기
       </button>
+      <div id="installPrompt" style="display: none">
+        <div>
+          <div>
+            <p>이 앱을 홈 화면에 추가하시겠습니까?</p>
+          </div>
+          <div>
+            <button id="cancel">나중에</button>
+            <button id="installPwaBtn">설치</button>
+          </div>
+        </div>
+      </div>
       <p>.</p>
       <div id="notificationPopup" class="Popup" style="display: none">
         <img id="popupImage" class="Popup_img" src="" alt="본문이미지" />

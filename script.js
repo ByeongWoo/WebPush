@@ -25,6 +25,8 @@ let closePopupBtn = "";
 let eventMsgElem = "";
 let permissionMsgElem = "";
 let makePWAbtn = "";
+let installPrompt = "";
+let installPwaBtn = "";
 
 document.addEventListener("DOMContentLoaded", function () {
   // DOM elements
@@ -45,6 +47,8 @@ document.addEventListener("DOMContentLoaded", function () {
   //eventMsgElem = document.getElementById("eventMsg");
   permissionMsgElem = document.getElementById("permissionMsg");
   makePWAbtn = document.getElementById("makePWA");
+  installPrompt = document.getElementById("installPrompt");
+  installPwaBtn = document.getElementById("installPwaBtn");
 
   // Event listeners
   getTokenBtn.addEventListener("click", getToken);
@@ -54,6 +58,22 @@ document.addEventListener("DOMContentLoaded", function () {
   handleSubmitBtn.addEventListener("click", handleSubmit);
   closePopupBtn.addEventListener("click", closePopup);
   makePWAbtn.addEventListener("click", makePWA);
+});
+
+window.addEventListener("beforeinstallprompt", (event) => {
+  // Prevent the mini-infobar from appearing on mobile.
+  event.preventDefault();
+  console.log("👍", "beforeinstallprompt", event);
+  // Stash the event so it can be triggered later.
+  window.deferredPrompt = event;
+  // Remove the 'hidden' class from the install button container.
+  divInstall.classList.toggle("hidden", false);
+});
+
+window.addEventListener("appinstalled", (event) => {
+  console.log("👍", "appinstalled", event);
+  // Clear the deferredPrompt so it can be garbage collected
+  window.deferredPrompt = null;
 });
 
 // Functions
@@ -198,17 +218,29 @@ async function handleNoti(e) {
   }
 }
 
-// PWA 설치
 async function makePWA(e) {
-  // 설치 이벤트를 기다림
-  deferredPrompt.prompt();
-  // 설치 결과를 기다림
-  const { outcome } = await deferredPrompt.userChoice;
-  // 설치 결과를 출력
-  console.log(`설치 결과: ${outcome}`);
-  // 이벤트 초기화
-  deferredPrompt = null;
+  // PWA 설치
+  installPrompt.style.display = "block";
 }
+
+installPwaBtn.addEventListener("click", async () => {
+  console.log("👍", "butInstall-clicked");
+  const promptEvent = window.deferredPrompt;
+  if (!promptEvent) {
+    // The deferred prompt isn't available.
+    return;
+  }
+  // Show the install prompt.
+  promptEvent.prompt();
+  // Log the result
+  const result = await promptEvent.userChoice;
+  console.log("👍", "userChoice", result);
+  // Reset the deferred prompt variable, since
+  // prompt() can only be called once.
+  window.deferredPrompt = null;
+  // Hide the install button.
+  divInstall.classList.toggle("hidden", true);
+});
 
 /**
  * 알림 요청
