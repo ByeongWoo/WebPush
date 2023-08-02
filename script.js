@@ -2,8 +2,8 @@
 let pushToken = "";
 let resData = "";
 let resNoti = "";
-let url = "http://localhost:8080";
-// let url = "https://0123-183-101-208-60.ngrok-free.app";
+// let url = "http://localhost:8080";
+let url = "https://0123-183-101-208-60.ngrok-free.app";
 let notification = null;
 let eventMsg = "";
 let permissionMsg = "";
