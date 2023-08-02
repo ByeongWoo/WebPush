@@ -200,8 +200,6 @@ async function handleNoti(e) {
 
 // PWA 설치
 async function makePWA(e) {
-  // 버튼을 숨김
-  installButton.style.display = "none";
   // 설치 이벤트를 기다림
   deferredPrompt.prompt();
   // 설치 결과를 기다림
@@ -210,7 +208,7 @@ async function makePWA(e) {
   console.log(`설치 결과: ${outcome}`);
   // 이벤트 초기화
   deferredPrompt = null;
-};
+}
 
 /**
  * 알림 요청
