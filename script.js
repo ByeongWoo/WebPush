@@ -199,34 +199,14 @@ async function handleNoti(e) {
 }
 
 async function makePWA(e) {
-  var userAgent = navigator.userAgent.toLowerCase();
-  // 햔재 페이지 url 확인
-  var url = window.location.href;
-
-  // 모바일 PWA 바로가기 링크 생성
-  if (userAgent.indexOf("android") > -1) {
-    // 안드로이드
-    var a = document.createElement("a");
-    a.href = url;
-    a.innerText = "안드로이드 바로가기";
-    document.body.appendChild(a);
-  } else if (
-    userAgent.indexOf("iphone") > -1 ||
-    userAgent.indexOf("ipad") > -1 ||
-    userAgent.indexOf("ipod") > -1
-  ) {
-    // 아이폰
-    var a = document.createElement("a");
-    a.href = url;
-    a.innerText = "아이폰 바로가기";
-    document.body.appendChild(a);
-  } else {
-    // PC
-    var a = document.createElement("a");
-    a.href = url;
-    a.innerText = "PC 바로가기";
-    document.body.appendChild(a);
-  }
+  window.addEventListener("beforeinstallprompt", (e) => {
+    // 이벤트를 중지
+    e.preventDefault();
+    // 이벤트를 저장
+    deferredPrompt = e;
+    // 버튼을 보여줌
+    installButton.style.display = "block";
+  });
 }
 /**
  * 알림 요청
