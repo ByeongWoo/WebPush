@@ -198,16 +198,20 @@ async function handleNoti(e) {
   }
 }
 
-async function makePWA(e) {
-  window.addEventListener("beforeinstallprompt", (e) => {
-    // 이벤트를 중지
-    e.preventDefault();
-    // 이벤트를 저장
-    deferredPrompt = e;
-    // 버튼을 보여줌
-    installButton.style.display = "block";
-  });
-}
+// PWA 설치
+makePWAbtn.addEventListener("click", async () => {
+  // 버튼을 숨김
+  installButton.style.display = "none";
+  // 설치 이벤트를 기다림
+  deferredPrompt.prompt();
+  // 설치 결과를 기다림
+  const { outcome } = await deferredPrompt.userChoice;
+  // 설치 결과를 출력
+  console.log(`설치 결과: ${outcome}`);
+  // 이벤트 초기화
+  deferredPrompt = null;
+});
+
 /**
  * 알림 요청
  * getPermission() 또는 getToken() 실행시 새로고침 필요(브라우저,PWA가 사이트 변화를 인식하도록 새로고침 한다)
