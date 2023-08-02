@@ -207,7 +207,6 @@ async function handleNoti(e) {
 }
 
 document.getElementById("makePWA").addEventListener("click", async () => {
-  console.log("👍", "butInstall-clicked");
   const promptEvent = window.deferredPrompt;
   if (!promptEvent) {
     // The deferred prompt isn't available.
