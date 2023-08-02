@@ -3,8 +3,6 @@
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="favicon.ico" />
-
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta
@@ -19,13 +17,11 @@
     />
     <!-- 홈 화면에서 표시되는 앱 이름을 지정 -->
     <meta name="apple-mobile-web-app-title" content="Web Push" />
-
     <link rel="apple-touch-icon" href="logo192.png" />
-    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="manifest" href="manifest.json" />
     <title>Web Push</title>
     <link rel="stylesheet" href="push.css" type="text/css" />
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script>
       if ("serviceWorker" in navigator) {
         navigator.serviceWorker
@@ -104,12 +100,6 @@
         style="padding: 10px; width: 120px; height: 40px"
       >
         알림 받기
-      </button>
-      <button
-        id="makePWA"
-        style="display: none; padding: 10px; width: 150px; height: 40px"
-      >
-        바로가기 만들기
       </button>
       <p>.</p>
       <div id="notificationPopup" class="Popup" style="display: none">

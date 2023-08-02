@@ -195,28 +195,6 @@ async function handleNoti(e) {
   }
 }
 /**
- * PWA 바로가기 생성
- *
- *
- *  */
-document.getElementById("makePWA").addEventListener("click", async () => {
-  const promptEvent = window.deferredPrompt;
-  if (!promptEvent) {
-    // The deferred prompt isn't available.
-    return;
-  }
-  // Show the install prompt.
-  promptEvent.prompt();
-  // Log the result
-  const result = await promptEvent.userChoice;
-  console.log("👍", "userChoice", result);
-  // Reset the deferred prompt variable, since
-  // prompt() can only be called once.
-  window.deferredPrompt = null;
-  // Hide the install button.
-});
-
-/**
  * 알림 요청
  * getPermission() 또는 getToken() 실행시 새로고침 필요(브라우저,PWA가 사이트 변화를 인식하도록 새로고침 한다)
  * permission === granted 면 실행안해도 됨
@@ -239,15 +217,4 @@ window.navigator.serviceWorker.addEventListener("message", handleMessage);
 
 window.addEventListener("beforeunload", function () {
   window.navigator.serviceWorker.removeEventListener("message", handleMessage);
-});
-
-window.addEventListener("beforeinstallprompt", (event) => {
-  makePWA.style.display = "block";
-  event.preventDefault();
-  deferredPrompt = event;
-});
-
-window.addEventListener("appinstalled", (event) => {
-  makePWA.style.display = "none";
-  deferredPrompt = null;
 });
