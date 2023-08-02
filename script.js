@@ -53,17 +53,6 @@ document.addEventListener("DOMContentLoaded", function () {
   closePopupBtn.addEventListener("click", closePopup);
 });
 
-window.addEventListener("beforeinstallprompt", (event) => {
-  event.preventDefault();
-  window.deferredPrompt = event;
-});
-
-window.addEventListener("appinstalled", (event) => {
-  console.log("appinstalled", event);
-
-  window.deferredPrompt = null;
-});
-
 // Functions
 function handleMessage(event) {
   console.log("event.data = ", event.data);
@@ -206,21 +195,32 @@ async function handleNoti(e) {
   }
 }
 
-document.getElementById("makePWA").addEventListener("click", async () => {
-  const promptEvent = window.deferredPrompt;
-  if (!promptEvent) {
-    // The deferred prompt isn't available.
-    return;
-  }
-  // Show the install prompt.
-  promptEvent.prompt();
-  // Log the result
-  const result = await promptEvent.userChoice;
-  console.log("👍", "userChoice", result);
-  // Reset the deferred prompt variable, since
-  // prompt() can only be called once.
-  window.deferredPrompt = null;
-  // Hide the install button.
+window.addEventListener("beforeinstallprompt", (event) => {
+  alert("beforeinstallprompt");
+  event.preventDefault();
+  deferredPrompt = event;
+
+  document.getElementById("makePWA").addEventListener("click", async () => {
+    const promptEvent = window.deferredPrompt;
+    if (!promptEvent) {
+      // The deferred prompt isn't available.
+      return;
+    }
+    // Show the install prompt.
+    promptEvent.prompt();
+    // Log the result
+    const result = await promptEvent.userChoice;
+    console.log("👍", "userChoice", result);
+    // Reset the deferred prompt variable, since
+    // prompt() can only be called once.
+    window.deferredPrompt = null;
+    // Hide the install button.
+  });
+});
+
+window.addEventListener("appinstalled", (event) => {
+  alert("appinstalled");
+  deferredPrompt = null;
 });
 
 /**
