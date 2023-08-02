@@ -59,18 +59,13 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 window.addEventListener("beforeinstallprompt", (event) => {
-  // Prevent the mini-infobar from appearing on mobile.
   event.preventDefault();
-  console.log("👍", "beforeinstallprompt", event);
-  // Stash the event so it can be triggered later.
   window.deferredPrompt = event;
-  // Remove the 'hidden' class from the install button container.
-  divInstall.classList.toggle("hidden", false);
 });
 
 window.addEventListener("appinstalled", (event) => {
-  console.log("👍", "appinstalled", event);
-  // Clear the deferredPrompt so it can be garbage collected
+  console.log("appinstalled", event);
+
   window.deferredPrompt = null;
 });
 
