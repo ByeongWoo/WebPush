@@ -24,6 +24,7 @@ let popupBody = "";
 let closePopupBtn = "";
 let eventMsgElem = "";
 let permissionMsgElem = "";
+let makePWA = "";
 
 document.addEventListener("DOMContentLoaded", function () {
   // DOM elements
@@ -43,6 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
   closePopupBtn = document.getElementById("closePopupBtn");
   //eventMsgElem = document.getElementById("eventMsg");
   permissionMsgElem = document.getElementById("permissionMsg");
+  makePWA = document.getElementById("makePWA");
 
   // Event listeners
   getTokenBtn.addEventListener("click", getToken);
@@ -196,7 +198,7 @@ async function handleNoti(e) {
 }
 
 window.addEventListener("beforeinstallprompt", (event) => {
-  alert("beforeinstallprompt");
+  makePWA.style.display = "block";
   event.preventDefault();
   deferredPrompt = event;
 
@@ -219,7 +221,7 @@ window.addEventListener("beforeinstallprompt", (event) => {
 });
 
 window.addEventListener("appinstalled", (event) => {
-  alert("appinstalled");
+  makePWA.style.display = "none";
   deferredPrompt = null;
 });
 
