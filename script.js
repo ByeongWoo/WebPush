@@ -133,7 +133,7 @@ async function getToken() {
           "BDCuwEJaNg8f8UtTnD4yylmCuWsTCxxVoA-VXWExkxtCDC8U4yadV3aEUptbMvid_ctsDevpP-0NH40V-6AfW8k",
       })
       .then(function (pushSubscription) {
-        //console.log(pushSubscription);
+        alert("구독 정보 : " + pushSubscription);
         pushToken = JSON.stringify(pushSubscription);
         pushTokenElem.innerText = pushToken;
         // 알림 허용 이벤트 처리 및 토큰 값을 사용하는 코드를 여기에 작성할 수 있습니다.
