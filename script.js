@@ -139,10 +139,10 @@ async function getToken() {
         // 알림 허용 이벤트 처리 및 토큰 값을 사용하는 코드를 여기에 작성할 수 있습니다.
       })
       .catch(function (error) {
-        alert("토큰을 받아오지 못했습니다.", error);
+        alert("A 토큰을 받아오지 못했습니다. : " + error);
       });
   } catch (error) {
-    alert("토큰을 받아오지 못했습니다.", error);
+    alert("B 토큰을 받아오지 못했습니다. : " + error);
   }
 }
 // 구독 정보 저장
