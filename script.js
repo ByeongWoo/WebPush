@@ -24,6 +24,7 @@ let popupBody = "";
 let closePopupBtn = "";
 let eventMsgElem = "";
 let permissionMsgElem = "";
+let makePWA = "";
 
 document.addEventListener("DOMContentLoaded", function () {
   // DOM elements
@@ -43,6 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
   closePopupBtn = document.getElementById("closePopupBtn");
   //eventMsgElem = document.getElementById("eventMsg");
   permissionMsgElem = document.getElementById("permissionMsg");
+  makePWA = document.getElementById("makePWA");
 
   // Event listeners
   getTokenBtn.addEventListener("click", getToken);
@@ -137,10 +139,10 @@ async function getToken() {
         // 알림 허용 이벤트 처리 및 토큰 값을 사용하는 코드를 여기에 작성할 수 있습니다.
       })
       .catch(function (error) {
-        console.log("토큰을 받아오지 못했습니다.", error);
+        alert("토큰을 받아오지 못했습니다.", error);
       });
   } catch (error) {
-    console.log("토큰을 받아오지 못했습니다.", error);
+    alert("토큰을 받아오지 못했습니다.", error);
   }
 }
 // 구독 정보 저장
@@ -194,6 +196,24 @@ async function handleNoti(e) {
     console.log("알림 응답에 실패했습니다.", error);
   }
 }
+
+document.getElementById("makePWA").addEventListener("click", async () => {
+  const promptEvent = window.deferredPrompt;
+  if (!promptEvent) {
+    // The deferred prompt isn't available.
+    return;
+  }
+  // Show the install prompt.
+  promptEvent.prompt();
+  // Log the result
+  const result = await promptEvent.userChoice;
+  console.log("👍", "userChoice", result);
+  // Reset the deferred prompt variable, since
+  // prompt() can only be called once.
+  window.deferredPrompt = null;
+  // Hide the install button.
+});
+
 /**
  * 알림 요청
  * getPermission() 또는 getToken() 실행시 새로고침 필요(브라우저,PWA가 사이트 변화를 인식하도록 새로고침 한다)
@@ -217,4 +237,15 @@ window.navigator.serviceWorker.addEventListener("message", handleMessage);
 
 window.addEventListener("beforeunload", function () {
   window.navigator.serviceWorker.removeEventListener("message", handleMessage);
+});
+
+window.addEventListener("beforeinstallprompt", (event) => {
+  makePWA.style.display = "block";
+  event.preventDefault();
+  deferredPrompt = event;
+});
+
+window.addEventListener("appinstalled", (event) => {
+  makePWA.style.display = "none";
+  deferredPrompt = null;
 });
