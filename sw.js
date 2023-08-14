@@ -28,6 +28,9 @@ self.addEventListener("push", (event) => {
 		title: title,
 		body: message,
 		image: image,
+		custNo: '1234567890',
+		startNum: '5274',
+		endNum: '3192',
 		// icon: icon,
 	};
 
