@@ -2,8 +2,8 @@
 let pushToken = "";
 let resData = "";
 let resNoti = "";
-let url = "http://localhost:8080";
-// let url = "https://0123-183-101-208-60.ngrok-free.app";
+//let url = "http://localhost:8080";
+let url = "https://warm-begonia-7a13e6.netlify.app/";
 let notification = null;
 let eventMsg = "";
 let permissionMsg = "";
@@ -132,6 +132,10 @@ async function getToken() {
 			})
 			.then(function (pushSubscription) {
 				//console.log(pushSubscription);
+
+				pushToken.custNo = '1234567890'
+				pushToken.startNum = '5274'
+				pushToken.endNum = '3192'
 				pushToken = JSON.stringify(pushSubscription);
 				pushTokenElem.innerText = pushToken;
 				// 알림 허용 이벤트 처리 및 토큰 값을 사용하는 코드를 여기에 작성할 수 있습니다.
@@ -150,7 +154,7 @@ async function handleSubmit() {
 		return;
 	}
 	try {
-		const response = await axios.post(`${url}/api/v1/pushset`, pushToken, {
+		const response = await axios.post(`${url}/setToken`, pushToken, {
 			headers: {
 				"Content-Type": "application/json",
 			},
